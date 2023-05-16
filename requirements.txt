@@ -1,0 +1,9 @@
+coincurve
+click
+ecdsa
+keyring
+mpmath
+pysha3
+sympy
+tabulate
+web3
