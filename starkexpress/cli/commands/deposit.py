@@ -24,15 +24,13 @@ def get_all_deposits_command(json: bool):
     if len(deposits):
         # Remove rawTransaction from the output.
         output = list(
-                map(
-                    lambda d: {
-                        key: value
-                        for key, value in d.items()
-                        if key != "rawTransaction"
-                    },
-                    deposits,
-                )
+            map(
+                lambda d: {
+                    key: value for key, value in d.items() if key != "rawTransaction"
+                },
+                deposits,
             )
+        )
         output_table(values=output) if not json else output_json(output)
 
 
@@ -85,7 +83,7 @@ def deposit_command(
         da_mode=DataAvailabilityMode.__members__[da_mode],
         token_id=token_id,
         private_key=eth_private_key,
-        wait_for_receipt=wait_for_receipt
+        wait_for_receipt=wait_for_receipt,
     )
 
     output_table(values=[result])

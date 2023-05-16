@@ -23,15 +23,13 @@ def get_all_withdraws_command(json: bool):
     if len(deposits):
         # Remove rawTransaction from the output.
         output = list(
-                map(
-                    lambda d: {
-                        key: value
-                        for key, value in d.items()
-                        if key != "rawTransaction"
-                    },
-                    deposits,
-                )
+            map(
+                lambda d: {
+                    key: value for key, value in d.items() if key != "rawTransaction"
+                },
+                deposits,
             )
+        )
         output_table(values=output) if not json else output_json(output)
 
 

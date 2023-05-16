@@ -28,6 +28,9 @@ def assets_get_command(asset_id: click.UUID, json: bool):
 @assets_group.command("list")
 @click.option("--json", is_flag=True, help="Output result as json.")
 def get_all_assets(json: bool):
+    """
+    Get all assets.
+    """
     sdk = load_sdk()
 
     assets = sdk.get_all_assets()
@@ -39,7 +42,7 @@ def get_all_assets(json: bool):
 @click.argument("asset-id", type=click.UUID)
 @click.option("--json", is_flag=True, help="Output result as json.")
 def enable_asset_command(asset_id: click.UUID, json: bool):
-    """Enable an asset by ID.
+    """Enable an asset in the tenant system.
 
     ASSET-ID is the ID of the asset to enable.
     """

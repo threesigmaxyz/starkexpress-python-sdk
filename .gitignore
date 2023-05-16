@@ -1,0 +1,20 @@
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+
+# IDE specific files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Compiled Python files
+*.pyc
+
+# Environment configuration
+.env

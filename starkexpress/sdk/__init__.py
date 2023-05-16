@@ -22,6 +22,12 @@ from starkexpress.sdk.enums import (
 )
 
 
+STARkEX_ABI_FILENAME = os.path.join(
+    os.path.dirname(__file__), "starkex_v45.json"
+)
+STARkEX_ABI = json.load(open(STARkEX_ABI_FILENAME))
+
+
 class StarkExpressSdk(object):
     def __init__(self, client_id: str, client_secret: str, rpc_url: str):
         self._client = StarkExpressClient(client_id, client_secret)
@@ -33,7 +39,7 @@ class StarkExpressSdk(object):
             address=self._web3.to_checksum_address(
                 "0x999458e70e1422d3b5d9f277da5a7435224ed9c1"
             ),
-            abi=json.load(open(os.path.abspath("abi/starkex_v45.json"))),
+            abi=STARkEX_ABI,
         )
 
     def get_user(self, user_id: str) -> Dict[str, Any]:
@@ -93,7 +99,9 @@ class StarkExpressSdk(object):
     def get_transaction(self, transaction_id: str) -> Dict[str, Any]:
         return self._client.get_transaction(transaction_id)
 
-    def get_all_transactions(self, tx_type: TransactionType = None) -> List[Dict[str, Any]]:
+    def get_all_transactions(
+        self, tx_type: TransactionType = None
+    ) -> List[Dict[str, Any]]:
         return self._client.get_transactions(tx_type=tx_type.value if tx_type else None)
 
     def deposit(
@@ -269,4 +277,3 @@ class StarkExpressSdk(object):
             withdrawn += vault_withdraw_amount
 
         return result
-

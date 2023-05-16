@@ -7,10 +7,10 @@ class Environment(Enum):
 
 
 class TransactionType(Enum):
-    Deposit = 'Deposit'
-    Transfer = 'Transfer'
-    Mint = 'Mint'
-    Withdrawal = 'Withdrawal'
+    Deposit = "Deposit"
+    Transfer = "Transfer"
+    Mint = "Mint"
+    Withdrawal = "Withdrawal"
 
 
 class AssetType(Enum):

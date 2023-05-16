@@ -130,10 +130,15 @@ class StarkExpressClient(object):
         return self.__get(f"/api/v1/transactions/{transaction_id}")
 
     def get_transactions(
-        self, tx_type: str = None, page_size: int = DEFAULT_PAGE_SIZE, page_number: int = 1
+        self,
+        tx_type: str = None,
+        page_size: int = DEFAULT_PAGE_SIZE,
+        page_number: int = 1,
     ) -> List[Dict[str, Any]]:
         params = {"page_size": page_size, "page_number": page_number}
-        params.update({"tx_type": tx_type, "tx_type_comparison": "IsEqualTo"} if tx_type else {})
+        params.update(
+            {"tx_type": tx_type, "tx_type_comparison": "IsEqualTo"} if tx_type else {}
+        )
         return self.__get("/api/v1/transactions", params=params)["data"]
 
     def get_deposit_details(

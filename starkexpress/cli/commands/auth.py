@@ -32,7 +32,9 @@ def status_command(json: bool):
     logged_in = is_logged_in()
 
     status = "CONNECTED" if logged_in else "DISCONNECTED"
-    output = [{"clientId": get_credentials()[0] if logged_in else "N/A", "status": status}]
+    output = [
+        {"clientId": get_credentials()[0] if logged_in else "N/A", "status": status}
+    ]
 
     output_table(values=output) if not json else output_json(output)
 

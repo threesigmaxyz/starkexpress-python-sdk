@@ -12,7 +12,7 @@ from starkexpress.cli.commands import (
     users_group,
     utils_group,
     vaults_group,
-    withdraws_group
+    withdraws_group,
 )
 
 

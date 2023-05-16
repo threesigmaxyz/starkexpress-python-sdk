@@ -2,13 +2,16 @@ from setuptools import setup, find_packages
 
 from starkexpress import __version__
 
+package_name = 'starkexpress'
+
 setup(
-    name='starkexpress',
+    name=package_name,
     version=__version__,
     author='StarkExpress Team',
     author_email='afonso@threesigma.xyz',
     description='Python SDK for StarkExpress',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'coincurve',
         'click',
