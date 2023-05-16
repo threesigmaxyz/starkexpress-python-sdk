@@ -80,4 +80,5 @@ def mint_command(
     if "errors" in result:
         output_table(values=result["errors"])
     else:
-        output_table(values=result) if not json else output_json(result)
+        output = list(result.values())[0]
+        output_table(values=output) if not json else output_json(output)

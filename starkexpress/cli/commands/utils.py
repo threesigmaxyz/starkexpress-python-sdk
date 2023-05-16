@@ -7,6 +7,8 @@ from starkexpress.sdk.crypto.eth import (
 
 from starkexpress.sdk.crypto.stark import (
     generate_stark_keys,
+    pedersen_hash,
+    pedersen_hash_field_elements
 )
 
 from starkexpress.cli.utils import (
@@ -60,3 +62,21 @@ def generate_stark_keys_command(count: int, json: bool):
     ]
 
     output_table(values=output) if not json else output_json(output)
+
+
+@utils_group.command("pedersen-hash")
+@click.argument("left", type=int)
+@click.argument("right", type=int)
+@click.option("--json", is_flag=True, help="Output result as json.")
+def pedersen_hash_command(left: int, right: int, json: bool):
+    """Calculate the Pedersen hash of two field elements."""
+    result = pedersen_hash_field_elements(left, right)
+
+    output = [{
+        "Left": left,
+        "Right": right,
+        "PedersenHash": result,
+    }]
+
+    output_table(values=output) if not json else output_json(output)
+

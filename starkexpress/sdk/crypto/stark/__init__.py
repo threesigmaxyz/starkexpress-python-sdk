@@ -24,6 +24,11 @@ def pedersen_hash(message: str) -> int:
     return hash_func(int(message, 16))
 
 
+# TODO combine with pedersen_hash
+def pedersen_hash_field_elements(*elements: int) -> int:
+    return hash_func(*elements)
+
+
 def sign_message(message_hash: int, private_key: str) -> Tuple[str, str]:
     stark_signature = sign(message_hash, int(private_key, 16))
 
