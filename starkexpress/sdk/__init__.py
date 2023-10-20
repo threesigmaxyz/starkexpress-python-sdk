@@ -17,6 +17,7 @@ from starkexpress.sdk.crypto.stark import (
     pedersen_hash,
 )
 from starkexpress.sdk.enums import (
+    AssetType,
     DataAvailabilityMode,
     TransactionType,
 )
@@ -29,8 +30,8 @@ STARkEX_ABI = json.load(open(STARkEX_ABI_FILENAME))
 
 
 class StarkExpressSdk(object):
-    def __init__(self, client_id: str, client_secret: str, rpc_url: str):
-        self._client = StarkExpressClient(client_id, client_secret)
+    def __init__(self, api_key: str, rpc_url: str):
+        self._client = StarkExpressClient(api_key)
 
         self._web3 = Web3(Web3.HTTPProvider(rpc_url))
         # TODO assert self._web3.is_connected()
@@ -87,6 +88,21 @@ class StarkExpressSdk(object):
     def enable_asset(self, asset_id: str) -> Dict[str, Any]:
         return self._client.enable_asset(asset_id)
 
+    def deploy_asset(self, asset_type: AssetType, name: str, symbol: str, quantum: int, url: str = None) -> Dict[str, Any]:
+        if asset_type not in [AssetType.ERC20_MINTABLE, AssetType.ERC721_MINTABLE, AssetType.ERC1155_MINTABLE]:
+            raise ValueError(f"Unsupported asset type: {asset_type}.")
+
+        if asset_type == AssetType.ERC721_MINTABLE and quantum != 1:
+            raise ValueError(f"Quantum must be 1 for ERC721 assets.")
+
+        return self._client.deploy_asset(
+            asset_type=asset_type,
+            name=name,
+            symbol=symbol,
+            quantum=quantum,
+            url=url,
+        )
+
     def get_vault(self, vault_id: str) -> Dict[str, Any]:
         return self._client.get_vault(vault_id)
 
@@ -122,7 +138,7 @@ class StarkExpressSdk(object):
             token_id=token_id,
         )
 
-        if deposit_details["assetContractAddress"] is not None:
+        if deposit_details.get("assetContractAddress") is not None:
             # TODO the API should return the approve function name, contract address and parameters.
             # TODO for each tx the API should include a singable payload as well.
             # TODO check allowance and approve if token.

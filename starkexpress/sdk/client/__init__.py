@@ -2,7 +2,7 @@ import requests
 
 from typing import Any, Dict, List, Tuple
 
-from starkexpress.sdk.enums import DataAvailabilityMode
+from starkexpress.sdk.enums import AssetType, DataAvailabilityMode
 from starkexpress.sdk.exceptions import StarkExpressApiException
 
 
@@ -21,29 +21,13 @@ class StarkExpressClient(object):
 
     DEFAULT_PAGE_SIZE = 100
 
-    def __init__(self, client_id: str, client_secret: str):
-        self.client_id = client_id
-        self.client_secret = client_secret
-
-    def __auth(self) -> str:
-        endpoint = f"{STARKEXPRESS_OAUTH_ENDPOINT}/oauth/token"
-        data = {
-            "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,
-            "audience": STARKEXPRESS_OAUTH_AUDIENCE,
-        }
-
-        response = requests.post(endpoint, json=data)
-        if response.status_code != 200:
-            raise StarkExpressApiException(response.text)
-
-        return response.json()["access_token"]
+    def __init__(self, api_key: str):
+        self.api_key = api_key
 
     def __get(self, path: str, params: Dict[str, Any] = None):
         endpoint = f"{STARKEXPRESS_API_ENDPOINT}{path}"
         headers = {
-            "Authorization": "Bearer " + self.__auth(),  # TODO cache this
+            "X-Api-Key": self.api_key,
             "Content-Type": "application/json",
         }
         response = requests.get(endpoint, params=params, headers=headers)
@@ -54,7 +38,7 @@ class StarkExpressClient(object):
     def __post(self, path: str, body: Dict[str, Any] = None):
         endpoint = f"{STARKEXPRESS_API_ENDPOINT}{path}"
         headers = {
-            "Authorization": "Bearer " + self.__auth(),  # TODO cache this
+            "X-Api-Key": self.api_key,
             "Content-Type": "application/json",
         }
         response = requests.post(endpoint, json=body, headers=headers)
@@ -110,6 +94,16 @@ class StarkExpressClient(object):
     def enable_asset(self, asset_id: str) -> Dict[str, Any]:
         body = {"assetId": asset_id}
         return self.__post("/api/v1/assets", body=body)
+
+    def deploy_asset(self, asset_type: AssetType, name: str, symbol: str, quantum: int, url: str = None) -> Dict[str, Any]:
+        body = {
+            "type": asset_type.value,
+            "name": name,
+            "symbol": symbol,
+            "quantum": quantum,
+            "url": url,
+        }
+        return self.__post("/api/v1/assets/deploy", body=body)
 
     def get_vault(self, vault_id: str) -> Dict[str, Any]:
         return self.__get(f"/api/v1/vaults/{vault_id}")

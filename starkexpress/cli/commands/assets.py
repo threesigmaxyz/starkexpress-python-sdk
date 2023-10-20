@@ -1,6 +1,7 @@
 import click
 
 from starkexpress.cli.utils import load_sdk, output_json, output_table
+from starkexpress.sdk.enums import AssetType
 
 
 @click.group("assets")
@@ -49,5 +50,24 @@ def enable_asset_command(asset_id: click.UUID, json: bool):
     sdk = load_sdk()
 
     asset = sdk.enable_asset(asset_id=str(asset_id))
+
+    output_table(values=[asset]) if not json else output_json([asset])
+
+
+@assets_group.command("deploy-erc20")
+@click.option("--name", type=str, prompt=True)
+@click.option("--symbol", type=str, prompt=True)
+@click.option("--quantum", type=int, prompt=False, default=1000000)
+@click.option("--json", is_flag=True, help="Output result as json.")
+def deploy_erc20_asset_command(name: str, symbol: str, quantum: int, json: bool):
+    """Deploy a mintable ERC20 asset.
+
+    NAME is the name of the asset.
+    SYMBOL is the symbol of the asset.
+    QUANTUM is the quantum of the asset.
+    """
+    sdk = load_sdk()
+
+    asset = sdk.deploy_asset(AssetType.ERC20_MINTABLE, name=name, symbol=symbol, quantum=quantum)
 
     output_table(values=[asset]) if not json else output_json([asset])

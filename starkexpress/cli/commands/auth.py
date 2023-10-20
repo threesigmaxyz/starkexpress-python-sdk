@@ -11,16 +11,15 @@ def auth_group():
 
 
 @auth_group.command("login")
-@click.option("--client-id", type=str, prompt=True)
-@click.option("--client-secret", type=str, prompt=True)
+@click.option("--api-key", type=str, prompt=True)
 @click.option("--json", is_flag=True, help="Output result as json.")
-def login_command(client_id: str, client_secret: str, json: bool):
+def login_command(api_key: str, json: bool):
     """Login to StarkExpress."""
     # TODO validate credentials.
-    login(client_id, client_secret)
+    login(api_key)
 
     # TODO query tenant info.
-    output = [{"clientId": client_id, "status": "CONNECTED"}]
+    output = [{"apiKey": api_key, "status": "CONNECTED"}]
 
     output_table(values=output) if not json else output_json(output)
 
@@ -33,7 +32,7 @@ def status_command(json: bool):
 
     status = "CONNECTED" if logged_in else "DISCONNECTED"
     output = [
-        {"clientId": get_credentials()[0] if logged_in else "N/A", "status": status}
+        {"apiKey": get_credentials() if logged_in else "N/A", "status": status}
     ]
 
     output_table(values=output) if not json else output_json(output)
