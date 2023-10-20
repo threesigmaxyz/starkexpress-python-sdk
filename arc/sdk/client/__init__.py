@@ -104,6 +104,23 @@ class ArcClient(object):
         }
         return self.__post("/api/v1/assets/deploy", body=body)
 
+    def allocate_vault(
+        self,
+        asset_id: str,
+        user_id: str,
+        token_id: str = None,
+        minting_blob: str = "",
+        da_mode: DataAvailabilityMode = DataAvailabilityMode.VALIDIUM
+    ) -> Dict[str, Any]:
+        body = {
+            "assetId": asset_id,
+            "userId": user_id,
+            "tokenId": token_id,
+            "mintingBlob": minting_blob,
+            "dataAvailabilityMode": da_mode.value,
+        }
+        return self.__post("/api/v1/assets/deploy", body=body)
+
     def get_vault(self, vault_id: str) -> Dict[str, Any]:
         return self.__get(f"/api/v1/vaults/{vault_id}")
 
