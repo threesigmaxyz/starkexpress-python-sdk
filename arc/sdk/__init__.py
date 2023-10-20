@@ -5,18 +5,18 @@ from typing import Any, Dict, List
 
 from web3 import Web3
 
-from starkexpress.sdk.client import StarkExpressClient
-from starkexpress.sdk.crypto.eth import (
+from arc.sdk.client import ArcClient
+from arc.sdk.crypto.eth import (
     get_eth_address_from_private_key,
     sign_eip712_register_message,
 )
-from starkexpress.sdk.crypto.stark import (
+from arc.sdk.crypto.stark import (
     get_stark_public_key_from_private_key,
     sign_message,
     get_transfer_msg,
     pedersen_hash,
 )
-from starkexpress.sdk.enums import (
+from arc.sdk.enums import (
     AssetType,
     DataAvailabilityMode,
     TransactionType,
@@ -29,9 +29,9 @@ STARkEX_ABI_FILENAME = os.path.join(
 STARkEX_ABI = json.load(open(STARkEX_ABI_FILENAME))
 
 
-class StarkExpressSdk(object):
+class ArcSdk(object):
     def __init__(self, api_key: str, rpc_url: str):
-        self._client = StarkExpressClient(api_key)
+        self._client = ArcClient(api_key)
 
         self._web3 = Web3(Web3.HTTPProvider(rpc_url))
         # TODO assert self._web3.is_connected()
@@ -56,7 +56,7 @@ class StarkExpressSdk(object):
         eth_address = get_eth_address_from_private_key(eth_private_key)
         stark_public_key = get_stark_public_key_from_private_key(stark_private_key)
 
-        # Query the StarkExpress API for the registration details.
+        # Query the Arc API for the registration details.
         register_details = self._client.get_register_details(
             username=username, eth_address=eth_address, stark_key=stark_public_key
         )
@@ -70,7 +70,7 @@ class StarkExpressSdk(object):
         # Sign the Ethereum address.
         stark_signature = sign_message(pedersen_hash(eth_address), stark_private_key)
 
-        # Send the registration request to the StarkExpress API.
+        # Send the registration request to the Arc API.
         return self._client.register_user(
             username=username,
             eth_address=eth_address,
@@ -193,7 +193,7 @@ class StarkExpressSdk(object):
         stark_private_key: str,
         token_id: int = None,
     ) -> Dict[str, Any]:
-        # Query the StarkExpress API for the transfer details.
+        # Query the Arc API for the transfer details.
         transfer_details = self._client.get_transfer_details(
             sender_id=sender_id,
             receiver_id=recipient_id,
@@ -211,7 +211,7 @@ class StarkExpressSdk(object):
             private_key=stark_private_key,
         )
 
-        # Send the transfer request to the StarkExpress API.
+        # Send the transfer request to the Arc API.
         transfer = self._client.transfer(
             sender_vault_id=transfer_details["senderVaultId"],
             receiver_vault_id=transfer_details["receiverVaultId"],

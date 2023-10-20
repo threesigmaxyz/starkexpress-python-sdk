@@ -2,21 +2,20 @@ import requests
 
 from typing import Any, Dict, List, Tuple
 
-from starkexpress.sdk.enums import AssetType, DataAvailabilityMode
-from starkexpress.sdk.exceptions import StarkExpressApiException
+from arc.sdk.enums import AssetType, DataAvailabilityMode
+from arc.sdk.exceptions import ArcApiException
 
 
-STARKEXPRESS_API_ENDPOINT = "https://testnet-api.starkexpress.io"
-STARKEXPRESS_OAUTH_ENDPOINT = "https://starkexpress-testnet.eu.auth0.com"
-STARKEXPRESS_OAUTH_AUDIENCE = "https://testnet-api.starkexpress.io/"
+# TODO add ARC environment Testnet/Mainnet.
+ARC_API_ENDPOINT = "https://testnet-api.onarc.io"
 
 
-class StarkExpressClient(object):
+class ArcClient(object):
     """
-    StarkExpress API client.
+    Arc API client.
 
     This will be replaced with an auto-generated client from the following OpenAPI spec:
-    https://starkexpress.redoc.ly/7f5cc840-50cd-43a4-aab2-49274c4704af
+    https://onarc.redoc.ly
     """
 
     DEFAULT_PAGE_SIZE = 100
@@ -25,25 +24,25 @@ class StarkExpressClient(object):
         self.api_key = api_key
 
     def __get(self, path: str, params: Dict[str, Any] = None):
-        endpoint = f"{STARKEXPRESS_API_ENDPOINT}{path}"
+        endpoint = f"{ARC_API_ENDPOINT}{path}"
         headers = {
             "X-Api-Key": self.api_key,
             "Content-Type": "application/json",
         }
         response = requests.get(endpoint, params=params, headers=headers)
         if response.status_code != 200:
-            raise StarkExpressApiException(response.text)
+            raise ArcApiException(response.text)
         return response.json()
 
     def __post(self, path: str, body: Dict[str, Any] = None):
-        endpoint = f"{STARKEXPRESS_API_ENDPOINT}{path}"
+        endpoint = f"{ARC_API_ENDPOINT}{path}"
         headers = {
             "X-Api-Key": self.api_key,
             "Content-Type": "application/json",
         }
         response = requests.post(endpoint, json=body, headers=headers)
         if response.status_code not in [200, 201]:
-            raise StarkExpressApiException(response.text)
+            raise ArcApiException(response.text)
         return response.json()
 
     def get_user(self, user_id: str) -> Dict[str, Any]:

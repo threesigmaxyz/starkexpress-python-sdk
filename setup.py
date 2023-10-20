@@ -1,15 +1,15 @@
 from setuptools import setup, find_packages
 
-from starkexpress import __version__
+from arc import __version__
 
-package_name = 'starkexpress'
+package_name = 'arc'
 
 setup(
     name=package_name,
     version=__version__,
-    author='StarkExpress Team',
-    author_email='afonso@threesigma.xyz',
-    description='Python SDK for StarkExpress',
+    author='Arc Team',
+    author_email='afonso@onarc.io',
+    description='Python SDK for Arc',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -25,7 +25,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'starkexpress-cli = starkexpress.cli.__main__:cli',
+            'arc-cli = arc.cli.__main__:cli',
         ],
     },
 )

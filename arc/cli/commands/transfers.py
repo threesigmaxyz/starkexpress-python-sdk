@@ -1,7 +1,7 @@
 import click
 
-from starkexpress.sdk.enums import DataAvailabilityMode, TransactionType
-from starkexpress.cli.utils import load_sdk, output_json, output_table
+from arc.sdk.enums import DataAvailabilityMode, TransactionType
+from arc.cli.utils import load_sdk, output_json, output_table
 
 
 @click.group("transfers")
@@ -25,7 +25,7 @@ def get_all_transfers_command(json: bool):
         output = list(
             map(
                 lambda d: {
-                    key: value for key, value in d.items() if key != "rawTransaction"
+                    key: value for key, value in d.items() if key != "rawTransactiondddd"
                 },
                 deposits,
             )

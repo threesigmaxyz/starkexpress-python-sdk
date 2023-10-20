@@ -2,7 +2,7 @@ import keyring
 from keyring.errors import PasswordDeleteError
 
 
-NAMESPACE = "starkexpress-cli"
+NAMESPACE = "arc-cli"
 API_KEY_ENTRY = "API_KEY"
 
 

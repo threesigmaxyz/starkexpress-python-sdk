@@ -1,8 +1,8 @@
 import click
 
-from starkexpress.cli.utils import load_sdk, output_json, output_table
-from starkexpress.sdk.crypto.eth import generate_eth_keys
-from starkexpress.sdk.crypto.stark import generate_stark_keys
+from arc.cli.utils import load_sdk, output_json, output_table
+from arc.sdk.crypto.eth import generate_eth_keys
+from arc.sdk.crypto.stark import generate_stark_keys
 
 
 @click.group("users")

@@ -1,17 +1,17 @@
 import click
 
-from starkexpress.sdk.crypto.eth import (
+from arc.sdk.crypto.eth import (
     generate_eth_keys,
     get_eth_address_from_private_key,
 )
 
-from starkexpress.sdk.crypto.stark import (
+from arc.sdk.crypto.stark import (
     generate_stark_keys,
     pedersen_hash,
     pedersen_hash_field_elements
 )
 
-from starkexpress.cli.utils import (
+from arc.cli.utils import (
     output_json,
     output_table,
 )

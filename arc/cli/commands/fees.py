@@ -1,6 +1,6 @@
 import click
 
-from starkexpress.cli.utils import load_sdk, output_table
+from arc.cli.utils import load_sdk, output_table
 
 
 @click.group("fees")

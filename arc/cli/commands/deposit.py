@@ -1,8 +1,8 @@
 import os
 import click
 
-from starkexpress.sdk.enums import DataAvailabilityMode, TransactionType
-from starkexpress.cli.utils import load_sdk, output_json, output_table
+from arc.sdk.enums import DataAvailabilityMode, TransactionType
+from arc.cli.utils import load_sdk, output_json, output_table
 
 
 @click.group("deposits")
@@ -56,7 +56,7 @@ def get_all_deposits_command(json: bool):
     "--eth-private-key",
     type=str,
     prompt="Ethereum private key",
-    default=lambda: os.environ.get("STARKEXPRESS_CLI_ETH_PRIVATE_KEY", ""),
+    default=lambda: os.environ.get("Arc_CLI_ETH_PRIVATE_KEY", ""),
     help="The Ethereum private key of the depositor.",
 )  # TODO hide input
 @click.option(

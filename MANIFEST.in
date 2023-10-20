@@ -1,2 +1,2 @@
-include starkexpress/sdk/crypto/stark/pedersen_params.json
-include starkexpress/sdk/starkex_v45.json
+include arc/sdk/crypto/stark/pedersen_params.json
+include arc/sdk/starkex_v45.json

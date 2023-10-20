@@ -1,7 +1,7 @@
 import click
 
-from starkexpress.cli.utils import load_sdk, output_json, output_table
-from starkexpress.sdk.enums import AssetType
+from arc.cli.utils import load_sdk, output_json, output_table
+from arc.sdk.enums import AssetType
 
 
 @click.group("assets")

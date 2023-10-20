@@ -1,13 +1,13 @@
 from typing import Tuple
 
-from starkexpress.sdk.crypto.stark.signature import (
+from arc.sdk.crypto.stark.signature import (
     get_random_private_key,
     pedersen_hash as hash_func,
     private_to_stark_key,
     sign,
 )
 
-from starkexpress.sdk.crypto.stark.messages import get_transfer_msg
+from arc.sdk.crypto.stark.messages import get_transfer_msg
 
 
 def generate_stark_keys() -> Tuple[str, str]:

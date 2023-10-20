@@ -1,7 +1,7 @@
 import click
 
-from starkexpress.cli.utils import output_json, output_table
-from starkexpress.cli.utils.auth import get_credentials, is_logged_in, login, logout
+from arc.cli.utils import output_json, output_table
+from arc.cli.utils.auth import get_credentials, is_logged_in, login, logout
 
 
 @click.group("auth")
@@ -14,7 +14,7 @@ def auth_group():
 @click.option("--api-key", type=str, prompt=True)
 @click.option("--json", is_flag=True, help="Output result as json.")
 def login_command(api_key: str, json: bool):
-    """Login to StarkExpress."""
+    """Login to Arc."""
     # TODO validate credentials.
     login(api_key)
 
@@ -41,7 +41,7 @@ def status_command(json: bool):
 @auth_group.command("logout")
 @click.option("--json", is_flag=True, help="Output result as json.")
 def logout_command(json: bool):
-    """Logout from StarkExpress."""
+    """Logout from Arc."""
     logout()
 
     output = [{"clientId": "N/A", "status": "DISCONNECTED"}]

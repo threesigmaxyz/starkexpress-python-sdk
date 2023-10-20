@@ -1,7 +1,7 @@
 import click
 
-from starkexpress import __version__
-from starkexpress.cli.commands import (
+from arc import __version__
+from arc.cli.commands import (
     assets_group,
     auth_group,
     deposits_group,
@@ -34,9 +34,9 @@ def print_version(ctx, _, value):
 )
 def cli():
     """
-    StarkExpress CLI
+    Arc CLI
 
-    The command line tool for StarkExpress.
+    The command line tool for Arc.
     """
     pass
 
